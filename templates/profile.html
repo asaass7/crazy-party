@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>👋 Привет, {{ current_user.username }}!</h2>
+    <p><strong>Email:</strong> {{ current_user.email }}</p>
+    <p><strong>Телефон:</strong> {{ current_user.phone }}</p>
+    <p><strong>Зарегистрирован:</strong> {{ current_user.created_at.strftime('%d.%m.%Y') if current_user.created_at else 'Недавно' }}</p>
+</div>
+
+<div class="card">
+    <h3>✏️ Редактировать профиль</h3>
+    <form method="POST">
+        <div style="margin-bottom: 15px;">
+            <label>Имя</label>
+            <input type="text" name="username" value="{{ current_user.username }}" style="width: 100%; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label>Телефон</label>
+            <input type="tel" name="phone" id="phone" value="{{ current_user.phone }}" style="width: 100%; padding: 10px;">
+        </div>
+        <button type="submit" class="btn">Обновить профиль</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>📅 Мои бронирования</h3>
+    {% if bookings %}
+        {% for booking in bookings %}
+        <div style="border-bottom: 1px solid #ddd; padding: 15px 0;">
+            <p><strong>{{ booking.animator_name }}</strong> - {{ booking.service_type }}</p>
+            <p>Дата: {{ booking.booking_date }} в {{ booking.booking_time }}</p>
+            <p>Статус: {% if booking.status == 'confirmed' %}✅ Подтверждено{% else %}❌ Отменено{% endif %}</p>
+            {% if booking.status == 'confirmed' %}
+                <a href="/cancel_booking/{{ booking.id }}" class="btn" style="background: #dc3545; margin-top: 10px;" onclick="return confirm('Отменить бронирование?')">Отменить</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>У вас пока нет бронирований.</p>
+    {% endif %}
+    <a href="/birthday" class="btn" style="margin-top: 15px;">➕ Забронировать аниматора</a>
+</div>
+
+<script>
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length > 11) val = val.slice(0, 11);
+            let formatted = '';
+            if (val.length > 0) formatted = '+7';
+            if (val.length > 1) formatted += ' (' + val.slice(1, 4);
+            if (val.length >= 5) formatted += ') ' + val.slice(4, 7);
+            if (val.length >= 8) formatted += '-' + val.slice(7, 9);
+            if (val.length >= 10) formatted += '-' + val.slice(9, 11);
+            phoneInput.value = formatted;
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy Party - {% block title %}Организация праздников{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/effects.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Светлая тема (по умолчанию) */
+        :root {
+            --bg-primary: #fff9f0;
+            --bg-secondary: #ffe8d4;
+            --text-primary: #2d1b0e;
+            --text-secondary: #5a3a2a;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            --footer-bg: #ffe8d4;
+            --border-color: #ffd4a3;
+        }
+        
+        /* Тёмная тема */
+        body.dark {
+            --bg-primary: #1a120b;
+            --bg-secondary: #2c1e14;
+            --text-primary: #f5e6d3;
+            --text-secondary: #d4b48c;
+            --card-bg: #2c241c;
+            --header-bg: linear-gradient(135deg, #9b2e2e, #c95a2e);
+            --footer-bg: #2c1e14;
+            --border-color: #5a3a2a;
+        }
+        
+        body {
+            font-family: Georgia, serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Кнопка переключения темы */
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .theme-switch:hover {
+            transform: scale(1.1);
+            background: var(--btn-bg);
+            color: white;
+        }
+        
+        .header { 
+            background: var(--header-bg); 
+            color: white; 
+            padding: 30px 20px; 
+            text-align: center; 
+            transition: background 0.3s ease;
+        }
+        
+        .header h1 { font-size: 3rem; margin-bottom: 10px; }
+        
+        .nav { margin-top: 20px; }
+        
+        .nav a { 
+            color: white; 
+            margin: 0 10px; 
+            text-decoration: none; 
+            padding: 8px 20px; 
+            border: 2px solid white; 
+            border-radius: 40px; 
+            display: inline-block; 
+            transition: all 0.3s;
+        }
+        
+        .nav a:hover { background: white; color: #ff6b6b; transform: scale(1.05); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; min-height: 500px; }
+        
+        .card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 20px; 
+            margin: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .btn { 
+            background: #ff6b6b; 
+            color: white; 
+            padding: 10px 25px; 
+            text-decoration: none; 
+            border-radius: 30px; 
+            display: inline-block; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 16px; 
+            transition: all 0.3s; 
+        }
+        
+        .btn:hover { background: #ff8e53; transform: scale(1.05); }
+        
+        input, textarea { 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            padding: 10px; 
+            width: 100%; 
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s; 
+        }
+        
+        input:focus, textarea:focus { 
+            outline: none; 
+            border-color: #ff6b6b; 
+            box-shadow: 0 0 5px rgba(255,107,107,0.3); 
+        }
+        
+        footer { 
+            background: var(--footer-bg); 
+            padding: 30px; 
+            text-align: center; 
+            margin-top: 50px;
+            transition: background 0.3s ease;
+        }
+        
+        .flash-message { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            color: white; 
+            z-index: 1000; 
+        }
+        
+        .flash-message.success { background: #28a745; }
+        .flash-message.error { background: #dc3545; }
+        
+        /* Описание компании */
+        .about-section {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+        }
+        
+        .about-section h2 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .features-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .nav a { display: inline-block; margin: 5px; padding: 5px 15px; font-size: 14px; }
+            .about-section h2 { font-size: 1.5rem; }
+            .about-section p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-switch" id="themeSwitch" onclick="toggleTheme()">🌙</button>
+    
+    <div class="header">
+        <h1>🎉 Crazy Party 🎉</h1>
+        <p>С нами ваш праздник пройдет незабываемо!</p>
+        <div class="nav">
+            <a href="/">Главная</a>
+            <a href="/birthday">Дни рождения</a>
+            <a href="/newyear">Новый год</a>
+            <a href="/halloween">Хэллоуин</a>
+            <a href="/feedback">Отзывы</a>
+            {% if current_user.is_authenticated %}
+                <a href="/profile">👤 {{ current_user.username }}</a>
+                <a href="/logout">Выйти</a>
+            {% else %}
+                <a href="/login">Вход</a>
+                <a href="/register">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+    
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        <p>📞 +7(952)812-52-52 | ✉️ CrazyPartyfamily@gmail.com</p>
+        <p>© 2025 Crazy Party. Все права защищены.</p>
+    </footer>
+    
+    <script>
+        // Функция переключения темы
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            const btn = document.getElementById('themeSwitch');
+            btn.textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        // Загрузка сохранённой темы
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark');
+            document.getElementById('themeSwitch').textContent = '☀️';
+        }
+        
+        // Авто-скрытие flash сообщений
+        setTimeout(() => {
+            document.querySelectorAll('.flash-message').forEach(msg => msg.remove());
+        }, 3000);
+    </script>
+</body>
+</html>

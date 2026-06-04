@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Новый год{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center;">🎄 Новый год</h2>
+<p style="text-align: center; margin-bottom: 30px;">Выбирайте Деда Мороза или аниматора вам по душе!</p>
+
+<div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+    <!-- Аниматор 1 - Константин Морковкин -->
+    <div class="animator-card" data-type="newyear" style="background: white; border-radius: 20px; overflow: hidden; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/Nanim1.jpg" alt="Константин Морковкин" style="width: 100%; height: 280px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: white;">
+            <h3 style="color: #ff6b6b; margin-bottom: 10px;">Константин Морковкин</h3>
+            <p style="color: #555; margin: 10px 0;">Уютная посиделка, куча подарков и отличная атмосфера</p>
+            {% if current_user.is_authenticated %}
+                <a href="/booking/newyear/Константин Морковкин" class="btn" style="display: inline-block; margin-top: 10px;">Забронировать</a>
+            {% else %}
+                <a href="/login" class="btn" style="display: inline-block; margin-top: 10px;">Войдите чтобы забронировать</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Аниматор 2 - Прохор Шаляпов -->
+    <div class="animator-card" data-type="newyear" style="background: white; border-radius: 20px; overflow: hidden; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/Nanim2.jpg" alt="Прохор Шаляпов" style="width: 100%; height: 280px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: white;">
+            <h3 style="color: #ff6b6b; margin-bottom: 10px;">Прохор Шаляпов</h3>
+            <p style="color: #555; margin: 10px 0;">Тур по самым культовым новогодним местам мира</p>
+            {% if current_user.is_authenticated %}
+                <a href="/booking/newyear/Прохор Шаляпов" class="btn" style="display: inline-block; margin-top: 10px;">Забронировать</a>
+            {% else %}
+                <a href="/login" class="btn" style="display: inline-block; margin-top: 10px;">Войдите чтобы забронировать</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Аниматор 3 - Антон Максименко -->
+    <div class="animator-card" data-type="newyear" style="background: white; border-radius: 20px; overflow: hidden; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/Nanim3.jpg" alt="Антон Максименко" style="width: 100%; height: 280px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: white;">
+            <h3 style="color: #ff6b6b; margin-bottom: 10px;">Антон Максименко</h3>
+            <p style="color: #555; margin: 10px 0;">Вкусный ужин под живую музыку</p>
+            {% if current_user.is_authenticated %}
+                <a href="/booking/newyear/Антон Максименко" class="btn" style="display: inline-block; margin-top: 10px;">Забронировать</a>
+            {% else %}
+                <a href="/login" class="btn" style="display: inline-block; margin-top: 10px;">Войдите чтобы забронировать</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

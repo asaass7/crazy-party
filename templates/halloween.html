@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Хэллоуин{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center;">🎃 Хэллоуин</h2>
+<p style="text-align: center; margin-bottom: 30px;">Выбирайте самого жуткого аниматора!</p>
+
+<div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+    <!-- Аниматор 1 - Джон Райкард -->
+    <div class="animator-card" data-type="halloween" style="background: white; border-radius: 20px; overflow: hidden; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/hanim1.jpg" alt="Джон Райкард" style="width: 100%; height: 280px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: white;">
+            <h3 style="color: #ff6b6b; margin-bottom: 10px;">Джон Райкард</h3>
+            <p style="color: #555; margin: 10px 0;">Занимательный и жуткий квест</p>
+            {% if current_user.is_authenticated %}
+                <a href="/booking/halloween/Джон Райкард" class="btn" style="display: inline-block; margin-top: 10px;">Забронировать</a>
+            {% else %}
+                <a href="/login" class="btn" style="display: inline-block; margin-top: 10px;">Войдите чтобы забронировать</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Аниматор 2 - Франсуа Летескье -->
+    <div class="animator-card" data-type="halloween" style="background: white; border-radius: 20px; overflow: hidden; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/hanim2.jpg" alt="Франсуа Летескье" style="width: 100%; height: 280px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: white;">
+            <h3 style="color: #ff6b6b; margin-bottom: 10px;">Франсуа Летескье</h3>
+            <p style="color: #555; margin: 10px 0;">Праздник в средневековом стиле</p>
+            {% if current_user.is_authenticated %}
+                <a href="/booking/halloween/Франсуа Летескье" class="btn" style="display: inline-block; margin-top: 10px;">Забронировать</a>
+            {% else %}
+                <a href="/login" class="btn" style="display: inline-block; margin-top: 10px;">Войдите чтобы забронировать</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Аниматор 3 - Криштиану Роналду -->
+    <div class="animator-card" data-type="halloween" style="background: white; border-radius: 20px; overflow: hidden; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/hanim3.jpg" alt="Криштиану Роналду" style="width: 100%; height: 280px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: white;">
+            <h3 style="color: #ff6b6b; margin-bottom: 10px;">Криштиану Роналду</h3>
+            <p style="color: #555; margin: 10px 0;">Самая жуткая ночь в древнем замке</p>
+            {% if current_user.is_authenticated %}
+                <a href="/booking/halloween/Криштиану Роналду" class="btn" style="display: inline-block; margin-top: 10px;">Забронировать</a>
+            {% else %}
+                <a href="/login" class="btn" style="display: inline-block; margin-top: 10px;">Войдите чтобы забронировать</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

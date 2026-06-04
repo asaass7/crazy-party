@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Бронирование{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto;">
+    <h2 style="text-align: center;">📅 Бронирование аниматора</h2>
+    <p style="text-align: center; margin: 10px 0;"><strong>Аниматор:</strong> {{ animator_name }}</p>
+    <p style="text-align: center;"><strong>Услуга:</strong> {{ service_type }}</p>
+    
+    <form method="POST">
+        <div style="margin-bottom: 15px;">
+            <label>Выберите дату:</label>
+            <input type="date" name="booking_date" id="booking_date" required style="width: 100%; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label>Выберите время:</label>
+            <input type="time" name="booking_time" required style="width: 100%; padding: 10px;">
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Подтвердить бронирование</button>
+    </form>
+</div>
+
+<script>
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('booking_date').min = today;
+</script>
+{% endblock %}

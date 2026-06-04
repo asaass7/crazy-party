@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<!-- Описание компании -->
+<div class="about-section">
+    <h2>🎯 О компании Crazy Party</h2>
+    <p>
+        <strong>Crazy Party</strong> — это команда профессиональных аниматоров и организаторов праздников, 
+        которая уже более 5 лет дарит детям и взрослым незабываемые эмоции и яркие впечатления!
+    </p>
+    <p>
+        Мы специализируемся на проведении <strong>дней рождения</strong>, <strong>новогодних утренников</strong>, 
+        <strong>хэллоуинских вечеринок</strong>, <strong>корпоративов</strong> и <strong>выпускных</strong>. 
+        Наши аниматоры — это настоящие профессионалы, которые умеют найти подход к каждому ребёнку и создать 
+        атмосферу настоящего праздника.
+    </p>
+    
+    <div class="features-list">
+        <div class="feature-item">
+            <div class="feature-icon">⭐</div>
+            <h4>5+ лет опыта</h4>
+            <p>Более 500 счастливых праздников</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🎭</div>
+            <h4>20+ аниматоров</h4>
+            <p>Профессионалы своего дела</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🎪</div>
+            <h4>50+ программ</h4>
+            <p>На любой вкус и возраст</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">💝</div>
+            <h4>Индивидуальный подход</h4>
+            <p>Учитываем все пожелания</p>
+        </div>
+    </div>
+</div>
+
+<h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px;">🎊 Наши услуги</h2>
+
+<div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+    <!-- Дни рождения -->
+    <div class="service-card" style="background: var(--card-bg); border-radius: 20px; overflow: hidden; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/birthday.jpg" alt="День рождения" style="width: 100%; height: 200px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: var(--card-bg);">
+            <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 15px;">🎂 Дни рождения</h3>
+            <p style="color: var(--text-secondary); margin: 15px 0;">Квесты, аниматоры, научные шоу и творческие мастер-классы</p>
+            <a href="/birthday" class="btn" style="display: inline-block;">Подробнее</a>
+        </div>
+    </div>
+    
+    <!-- Новый год -->
+    <div class="service-card" style="background: var(--card-bg); border-radius: 20px; overflow: hidden; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/newyear.jpg" alt="Новый год" style="width: 100%; height: 200px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: var(--card-bg);">
+            <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 15px;">🎄 Новый год</h3>
+            <p style="color: var(--text-secondary); margin: 15px 0;">Уютные посиделки, туры по новогодним местам, живая музыка</p>
+            <a href="/newyear" class="btn" style="display: inline-block;">Подробнее</a>
+        </div>
+    </div>
+    
+    <!-- Хэллоуин -->
+    <div class="service-card" style="background: var(--card-bg); border-radius: 20px; overflow: hidden; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <img src="/static/images/halloween.jpg" alt="Хэллоуин" style="width: 100%; height: 200px; object-fit: cover;">
+        <div style="padding: 20px; text-align: center; background: var(--card-bg);">
+            <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 15px;">🎃 Хэллоуин</h3>
+            <p style="color: var(--text-secondary); margin: 15px 0;">Интерактивные квесты, ночь в замке, средневековый стиль</p>
+            <a href="/halloween" class="btn" style="display: inline-block;">Подробнее</a>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 40px; text-align: center;">
+    <h3 style="color: #ff6b6b;">⏰ До Нового Года осталось:</h3>
+    <div id="countdown" style="font-size: 2rem; font-weight: bold; color: #ff6b6b; margin: 20px 0;"></div>
+</div>
+
+<script>
+    function updateCountdown() {
+        const target = new Date(new Date().getFullYear() + 1, 0, 1);
+        const now = new Date();
+        const diff = target - now;
+        if (diff <= 0) {
+            document.getElementById('countdown').innerHTML = 'С Новым Годом! 🎄';
+        } else {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / (1000 * 60)) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
+            document.getElementById('countdown').innerHTML = `${days}д ${hours}ч ${mins}м ${secs}с`;
+        }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+{% endblock %}

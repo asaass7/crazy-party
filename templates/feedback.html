@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Обратная связь{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <h2 style="text-align: center;">💬 Обратная связь</h2>
+    <p style="text-align: center;">Поделитесь своими впечатлениями!</p>
+    
+    <form method="POST">
+        <div style="margin-bottom: 15px;">
+            <label>Ваше имя *</label>
+            <input type="text" name="name" value="{{ current_user.username if current_user.is_authenticated else '' }}" required style="width: 100%; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label>Email *</label>
+            <input type="email" name="email" value="{{ current_user.email if current_user.is_authenticated else '' }}" required style="width: 100%; padding: 10px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label>Сообщение *</label>
+            <textarea name="message" rows="5" required style="width: 100%; padding: 10px;"></textarea>
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Отправить</button>
+    </form>
+</div>
+{% endblock %}
