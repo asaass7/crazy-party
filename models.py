@@ -48,3 +48,4 @@ class Feedback(db.Model):
     
     def __repr__(self):
         return f'<Feedback from {self.name}>'
+# Database models for Crazy Party
