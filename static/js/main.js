@@ -86,4 +86,4 @@ function phoneMask(input) {
 }
 
 // Применяем маску ко всем полям телефона
-document.querySelectorAll('input[type="tel"]').forEach(phoneMask);
+document.querySelectorAll('input[type="tel"]').forEach(phoneMask);// Version 1.0 - Main JavaScript file
