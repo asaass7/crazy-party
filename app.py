@@ -354,4 +354,4 @@ def api_create_booking():
 # ========== ЗАПУСК ==========
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)# Version 1.0.0
