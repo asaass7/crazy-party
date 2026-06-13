@@ -13,7 +13,9 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    bio = db.Column(db.Text, nullable=True)  # Добавляем поле "О себе"
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_login = db.Column(db.DateTime, nullable=True)  # Добавляем last_login
     
     # Связь с бронированиями
     bookings = db.relationship('Booking', backref='user', lazy=True, cascade='all, delete-orphan')
@@ -48,4 +50,3 @@ class Feedback(db.Model):
     
     def __repr__(self):
         return f'<Feedback from {self.name}>'
-# Database models for Crazy Party

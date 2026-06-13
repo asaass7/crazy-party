@@ -8,17 +8,19 @@
     <p style="text-align: center;">Поделитесь своими впечатлениями!</p>
     
     <form method="POST">
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Ваше имя *</label>
-            <input type="text" name="name" value="{{ current_user.username if current_user.is_authenticated else '' }}" required style="width: 100%; padding: 10px;">
+            <input type="text" name="name" value="{{ form_data.name if form_data else current_user.username if current_user.is_authenticated else '' }}"
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Email *</label>
-            <input type="email" name="email" value="{{ current_user.email if current_user.is_authenticated else '' }}" required style="width: 100%; padding: 10px;">
+            <input type="email" name="email" value="{{ form_data.email if form_data else current_user.email if current_user.is_authenticated else '' }}"
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Сообщение *</label>
-            <textarea name="message" rows="5" required style="width: 100%; padding: 10px;"></textarea>
+            <textarea name="message" rows="5" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>{{ form_data.message if form_data else '' }}</textarea>
         </div>
         <button type="submit" class="btn" style="width: 100%;">Отправить</button>
     </form>

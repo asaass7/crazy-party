@@ -6,33 +6,39 @@
 <div class="card" style="max-width: 500px; margin: 0 auto;">
     <h2 style="text-align: center;">📝 Регистрация</h2>
     <form method="POST">
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Имя *</label>
-            <input type="text" name="username" required style="width: 100%; padding: 10px;">
+            <input type="text" name="username" value="{{ form_data.username if form_data else '' }}" 
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Email *</label>
-            <input type="email" name="email" required style="width: 100%; padding: 10px;">
+            <input type="email" name="email" value="{{ form_data.email if form_data else '' }}"
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Телефон *</label>
-            <input type="tel" name="phone" id="phone" required style="width: 100%; padding: 10px;" placeholder="+7 (___) ___-__-__">
+            <input type="tel" name="phone" id="phone" value="{{ form_data.phone if form_data else '' }}"
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" 
+                   placeholder="+7 (___) ___-__-__" required>
         </div>
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Пароль *</label>
-            <input type="password" name="password" required style="width: 100%; padding: 10px;">
+            <input type="password" name="password" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Подтверждение пароля *</label>
-            <input type="password" name="confirm_password" required style="width: 100%; padding: 10px;">
+            <input type="password" name="confirm_password" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
         <button type="submit" class="btn" style="width: 100%;">Зарегистрироваться</button>
     </form>
-    <p style="text-align: center; margin-top: 20px;">
-        Уже есть аккаунт? <a href="/login">Войти</a>
+    <p style="text-align: center; margin-top: 1rem;">
+        Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a>
     </p>
 </div>
+
 <script>
+    // Маска телефона
     const phoneInput = document.getElementById('phone');
     phoneInput.addEventListener('input', (e) => {
         let val = e.target.value.replace(/\D/g, '');

@@ -5,17 +5,19 @@
 {% block content %}
 <div class="card" style="max-width: 500px; margin: 0 auto;">
     <h2 style="text-align: center;">📅 Бронирование аниматора</h2>
-    <p style="text-align: center; margin: 10px 0;"><strong>Аниматор:</strong> {{ animator_name }}</p>
-    <p style="text-align: center;"><strong>Услуга:</strong> {{ service_type }}</p>
+    <p style="text-align: center;">Аниматор: <strong>{{ animator_name }}</strong></p>
+    <p style="text-align: center;">Услуга: <strong>{{ service_type }}</strong></p>
     
     <form method="POST">
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Выберите дату:</label>
-            <input type="date" name="booking_date" id="booking_date" required style="width: 100%; padding: 10px;">
+            <input type="date" name="booking_date" min="{{ now }}" 
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
-        <div style="margin-bottom: 15px;">
+        <div class="form-group" style="margin-bottom: 1rem;">
             <label>Выберите время:</label>
-            <input type="time" name="booking_time" required style="width: 100%; padding: 10px;">
+            <input type="time" name="booking_time" 
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" required>
         </div>
         <button type="submit" class="btn" style="width: 100%;">Подтвердить бронирование</button>
     </form>
@@ -23,6 +25,6 @@
 
 <script>
     const today = new Date().toISOString().split('T')[0];
-    document.getElementById('booking_date').min = today;
+    document.querySelector('input[name="booking_date"]').min = today;
 </script>
 {% endblock %}

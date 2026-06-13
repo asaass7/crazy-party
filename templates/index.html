@@ -3,81 +3,112 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-<!-- Описание компании -->
-<div class="about-section">
-    <h2>🎯 О компании Crazy Party</h2>
-    <p>
+<!-- Hero секция с описанием компании -->
+<div class="hero-section" style="background: linear-gradient(135deg, #ff6b6b20, #ff8e5320); border-radius: 30px; padding: 50px 30px; margin-bottom: 50px; text-align: center;">
+    <h1 style="color: #ff6b6b; font-size: 2.5rem; margin-bottom: 20px;">🎉 Добро пожаловать в Crazy Party! 🎉</h1>
+    <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 30px auto; line-height: 1.8;">
         <strong>Crazy Party</strong> — это команда профессиональных аниматоров и организаторов праздников, 
-        которая уже более 5 лет дарит детям и взрослым незабываемые эмоции и яркие впечатления!
+        которая уже <strong>более 5 лет</strong> дарит детям и взрослым незабываемые эмоции и яркие впечатления!
     </p>
-    <p>
-        Мы специализируемся на проведении <strong>дней рождения</strong>, <strong>новогодних утренников</strong>, 
-        <strong>хэллоуинских вечеринок</strong>, <strong>корпоративов</strong> и <strong>выпускных</strong>. 
-        Наши аниматоры — это настоящие профессионалы, которые умеют найти подход к каждому ребёнку и создать 
-        атмосферу настоящего праздника.
+    <p style="font-size: 1rem; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+        Мы знаем, как сделать ваш праздник особенным! От маленьких дней рождения до масштабных корпоративов — 
+        мы гарантируем индивидуальный подход, качественную организацию и море позитива!
     </p>
-    
-    <div class="features-list">
-        <div class="feature-item">
-            <div class="feature-icon">⭐</div>
-            <h4>5+ лет опыта</h4>
-            <p>Более 500 счастливых праздников</p>
+</div>
+
+<!-- Преимущества компании -->
+<div style="display: flex; gap: 25px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px;">
+    <div class="card" style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg);">
+        <div style="font-size: 3rem;">⭐</div>
+        <h3 style="color: #ff6b6b; margin: 10px 0;">5+ лет опыта</h3>
+        <p>Более 500 счастливых праздников</p>
+    </div>
+    <div class="card" style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg);">
+        <div style="font-size: 3rem;">🎭</div>
+        <h3 style="color: #ff6b6b; margin: 10px 0;">20+ аниматоров</h3>
+        <p>Профессионалы своего дела</p>
+    </div>
+    <div class="card" style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg);">
+        <div style="font-size: 3rem;">🎪</div>
+        <h3 style="color: #ff6b6b; margin: 10px 0;">50+ программ</h3>
+        <p>На любой вкус и возраст</p>
+    </div>
+    <div class="card" style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg);">
+        <div style="font-size: 3rem;">💝</div>
+        <h3 style="color: #ff6b6b; margin: 10px 0;">Индивидуальный подход</h3>
+        <p>Учитываем все пожелания</p>
+    </div>
+</div>
+
+<!-- Наши услуги -->
+<div class="destinations">
+    <h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px;">🎊 Наши услуги</h2>
+    <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+        <div class="service-card" style="width: 320px; text-align: center; background: var(--card-bg); border-radius: 20px; overflow: hidden;">
+            <img src="/static/images/birthday.jpg" alt="День рождения" style="width: 100%; height: 200px; object-fit: cover;">
+            <div style="padding: 20px;">
+                <h3 style="color: #ff6b6b; font-size: 1.5rem;">🎂 Дни рождения</h3>
+                <ul style="list-style: none; text-align: left; margin: 15px 0;">
+                    <li style="margin: 8px 0;">🎯 В стиле игрового квеста</li>
+                    <li style="margin: 8px 0;">🔬 В научном стиле</li>
+                    <li style="margin: 8px 0;">🎨 В творческом стиле</li>
+                </ul>
+                <a href="{{ url_for('birthday') }}" class="btn">Подробнее</a>
+            </div>
         </div>
-        <div class="feature-item">
-            <div class="feature-icon">🎭</div>
-            <h4>20+ аниматоров</h4>
-            <p>Профессионалы своего дела</p>
+        <div class="service-card" style="width: 320px; text-align: center; background: var(--card-bg); border-radius: 20px; overflow: hidden;">
+            <img src="/static/images/newyear.jpg" alt="Новый год" style="width: 100%; height: 200px; object-fit: cover;">
+            <div style="padding: 20px;">
+                <h3 style="color: #ff6b6b; font-size: 1.5rem;">🎄 Новый год</h3>
+                <ul style="list-style: none; text-align: left; margin: 15px 0;">
+                    <li style="margin: 8px 0;">🏠 Уютная посиделка в беседке</li>
+                    <li style="margin: 8px 0;">✈️ Тур по новогодним местам</li>
+                    <li style="margin: 8px 0;">🎵 Ужин под живую музыку</li>
+                </ul>
+                <a href="{{ url_for('newyear') }}" class="btn">Подробнее</a>
+            </div>
         </div>
-        <div class="feature-item">
-            <div class="feature-icon">🎪</div>
-            <h4>50+ программ</h4>
-            <p>На любой вкус и возраст</p>
-        </div>
-        <div class="feature-item">
-            <div class="feature-icon">💝</div>
-            <h4>Индивидуальный подход</h4>
-            <p>Учитываем все пожелания</p>
+        <div class="service-card" style="width: 320px; text-align: center; background: var(--card-bg); border-radius: 20px; overflow: hidden;">
+            <img src="/static/images/halloween.jpg" alt="Хэллоуин" style="width: 100%; height: 200px; object-fit: cover;">
+            <div style="padding: 20px;">
+                <h3 style="color: #ff6b6b; font-size: 1.5rem;">🎃 Хэллоуин</h3>
+                <ul style="list-style: none; text-align: left; margin: 15px 0;">
+                    <li style="margin: 8px 0;">👻 Интерактивный квест</li>
+                    <li style="margin: 8px 0;">🏰 В средневековом стиле</li>
+                    <li style="margin: 8px 0;">🌙 Ночь в замке</li>
+                </ul>
+                <a href="{{ url_for('halloween') }}" class="btn">Подробнее</a>
+            </div>
         </div>
     </div>
 </div>
 
-<h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px;">🎊 Наши услуги</h2>
-
-<div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
-    <!-- Дни рождения -->
-    <div class="service-card" style="background: var(--card-bg); border-radius: 20px; overflow: hidden; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <img src="/static/images/birthday.jpg" alt="День рождения" style="width: 100%; height: 200px; object-fit: cover;">
-        <div style="padding: 20px; text-align: center; background: var(--card-bg);">
-            <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 15px;">🎂 Дни рождения</h3>
-            <p style="color: var(--text-secondary); margin: 15px 0;">Квесты, аниматоры, научные шоу и творческие мастер-классы</p>
-            <a href="/birthday" class="btn" style="display: inline-block;">Подробнее</a>
-        </div>
-    </div>
-    
-    <!-- Новый год -->
-    <div class="service-card" style="background: var(--card-bg); border-radius: 20px; overflow: hidden; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <img src="/static/images/newyear.jpg" alt="Новый год" style="width: 100%; height: 200px; object-fit: cover;">
-        <div style="padding: 20px; text-align: center; background: var(--card-bg);">
-            <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 15px;">🎄 Новый год</h3>
-            <p style="color: var(--text-secondary); margin: 15px 0;">Уютные посиделки, туры по новогодним местам, живая музыка</p>
-            <a href="/newyear" class="btn" style="display: inline-block;">Подробнее</a>
-        </div>
-    </div>
-    
-    <!-- Хэллоуин -->
-    <div class="service-card" style="background: var(--card-bg); border-radius: 20px; overflow: hidden; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <img src="/static/images/halloween.jpg" alt="Хэллоуин" style="width: 100%; height: 200px; object-fit: cover;">
-        <div style="padding: 20px; text-align: center; background: var(--card-bg);">
-            <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 15px;">🎃 Хэллоуин</h3>
-            <p style="color: var(--text-secondary); margin: 15px 0;">Интерактивные квесты, ночь в замке, средневековый стиль</p>
-            <a href="/halloween" class="btn" style="display: inline-block;">Подробнее</a>
-        </div>
-    </div>
-</div>
-
+<!-- Блок с отзывами -->
 <div class="card" style="margin-top: 40px; text-align: center;">
-    <h3 style="color: #ff6b6b;">⏰ До Нового Года осталось:</h3>
-    <div id="countdown" style="font-size: 2rem; font-weight: bold; color: #ff6b6b; margin: 20px 0;"></div>
+    <h2 style="color: #ff6b6b; margin-bottom: 20px;">💬 Что говорят наши клиенты</h2>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: var(--bg-secondary); border-radius: 15px;">
+            <div style="color: #ffc107; font-size: 1.2rem;">★★★★★</div>
+            <p style="margin: 10px 0;">"Спасибо Crazy Party за незабываемый день рождения сына! Аниматоры просто супер!"</p>
+            <strong>- Анна</strong>
+        </div>
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: var(--bg-secondary); border-radius: 15px;">
+            <div style="color: #ffc107; font-size: 1.2rem;">★★★★★</div>
+            <p style="margin: 10px 0;">"Новогодний корпоратив прошёл на ура! Организация на высшем уровне."</p>
+            <strong>- Михаил</strong>
+        </div>
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: var(--bg-secondary); border-radius: 15px;">
+            <div style="color: #ffc107; font-size: 1.2rem;">★★★★★</div>
+            <p style="margin: 10px 0;">"Хэллоуинская вечеринка была жутко весёлой! Дети в восторге!"</p>
+            <strong>- Екатерина</strong>
+        </div>
+    </div>
+</div>
+
+<!-- Таймер до Нового Года -->
+<div class="card" style="text-align: center; margin-top: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+    <h3>⏰ До Нового Года осталось:</h3>
+    <div id="countdown" style="font-size: 2rem; font-weight: bold; margin: 20px 0;"></div>
 </div>
 
 <script>

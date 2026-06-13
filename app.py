@@ -118,6 +118,9 @@ def login():
         user = User.query.filter_by(email=email).first()
         
         if user and bcrypt.check_password_hash(user.password_hash, password):
+            # Обновляем last_login
+            user.last_login = datetime.utcnow()
+            db.session.commit()
             login_user(user)
             flash(f'С возвращением, {user.username}!', 'success')
             next_page = request.args.get('next')
@@ -138,35 +141,80 @@ def logout():
 @login_required
 def profile():
     if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        phone = request.form.get('phone', '').strip()
+        action = request.form.get('action')
         
-        errors = {}
+        if action == 'update_profile':
+            username = request.form.get('username', '').strip()
+            phone = request.form.get('phone', '').strip()
+            bio = request.form.get('bio', '').strip()
+            
+            errors = {}
+            
+            if not username or len(username) < 2:
+                errors['username'] = 'Имя должно содержать минимум 2 символа'
+            
+            if not phone or len(re.sub(r'\D', '', phone)) < 10:
+                errors['phone'] = 'Введите корректный номер телефона'
+            
+            # Проверка уникальности имени
+            existing_user = User.query.filter_by(username=username).first()
+            if existing_user and existing_user.id != current_user.id:
+                errors['username'] = 'Это имя уже занято'
+            
+            if errors:
+                for key, msg in errors.items():
+                    flash(msg, 'error')
+            else:
+                current_user.username = username
+                current_user.phone = phone
+                current_user.bio = bio
+                db.session.commit()
+                flash('Профиль обновлён!', 'success')
         
-        if not username or len(username) < 2:
-            errors['username'] = 'Имя должно содержать минимум 2 символа'
-        
-        if not phone or len(re.sub(r'\D', '', phone)) < 10:
-            errors['phone'] = 'Введите корректный номер телефона'
-        
-        # Проверка уникальности имени
-        existing_user = User.query.filter_by(username=username).first()
-        if existing_user and existing_user.id != current_user.id:
-            errors['username'] = 'Это имя уже занято'
-        
-        if errors:
-            for key, msg in errors.items():
-                flash(msg, 'error')
-        else:
-            current_user.username = username
-            current_user.phone = phone
-            db.session.commit()
-            flash('Профиль обновлён!', 'success')
+        elif action == 'change_password':
+            old_password = request.form.get('old_password')
+            new_password = request.form.get('new_password')
+            confirm_password = request.form.get('confirm_password')
+            
+            errors = {}
+            
+            if not bcrypt.check_password_hash(current_user.password_hash, old_password):
+                errors['old_password'] = 'Неверный текущий пароль'
+            
+            if not new_password or len(new_password) < 6:
+                errors['new_password'] = 'Пароль должен содержать минимум 6 символов'
+            
+            if new_password != confirm_password:
+                errors['confirm_password'] = 'Пароли не совпадают'
+            
+            if errors:
+                for key, msg in errors.items():
+                    flash(msg, 'error')
+            else:
+                current_user.password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
+                db.session.commit()
+                flash('Пароль успешно изменён!', 'success')
     
     # Получаем бронирования пользователя
     bookings = Booking.query.filter_by(user_id=current_user.id).order_by(Booking.booking_date.desc()).all()
     
     return render_template('profile.html', bookings=bookings)
+
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        user = User.query.filter_by(email=email).first()
+        
+        if user:
+            # В реальном проекте здесь отправляется email со ссылкой сброса
+            flash(f'Инструкции по восстановлению пароля отправлены на {email}', 'info')
+        else:
+            flash('Пользователь с таким email не найден', 'error')
+        
+        return redirect(url_for('login'))
+    
+    return render_template('forgot_password.html')
 
 # ========== УСЛУГИ И БРОНИРОВАНИЕ ==========
 
@@ -205,16 +253,13 @@ def booking(service_type, animator_name):
         booking_time = request.form.get('booking_time')
         
         try:
-            # Парсинг даты и времени
             date_obj = datetime.strptime(booking_date, '%Y-%m-%d').date()
             time_obj = datetime.strptime(booking_time, '%H:%M').time()
             
-            # Проверка: дата не может быть в прошлом
             if date_obj < date.today():
                 flash('Дата не может быть в прошлом', 'error')
                 return render_template('booking.html', service_type=service_type, animator_name=animator_name)
             
-            # Создание бронирования
             booking = Booking(
                 user_id=current_user.id,
                 animator_name=animator_name,
@@ -272,7 +317,6 @@ def feedback():
                 flash(msg, 'error')
             return render_template('feedback.html', form_data=request.form)
         
-        # Сохранение отзыва
         feedback = Feedback(
             user_id=current_user.id if current_user.is_authenticated else None,
             name=name,
@@ -291,7 +335,6 @@ def feedback():
 
 @app.route('/api/services', methods=['GET'])
 def api_get_services():
-    """GET /api/services - получение списка услуг"""
     services = [
         {'id': 'birthday', 'name': 'Дни рождения', 'price': 'от 5000 ₽'},
         {'id': 'newyear', 'name': 'Новый год', 'price': 'от 8000 ₽'},
@@ -302,8 +345,18 @@ def api_get_services():
 @app.route('/api/bookings', methods=['GET'])
 @login_required
 def api_get_bookings():
-    """GET /api/bookings - получение бронирований текущего пользователя"""
-    bookings = Booking.query.filter_by(user_id=current_user.id).all()
+    # Добавляем фильтрацию по параметрам
+    status_filter = request.args.get('status', None)
+    service_filter = request.args.get('service_type', None)
+    
+    query = Booking.query.filter_by(user_id=current_user.id)
+    
+    if status_filter:
+        query = query.filter_by(status=status_filter)
+    if service_filter:
+        query = query.filter_by(service_type=service_filter)
+    
+    bookings = query.order_by(Booking.booking_date.desc()).all()
     bookings_data = [{
         'id': b.id,
         'animator_name': b.animator_name,
@@ -314,10 +367,29 @@ def api_get_bookings():
     } for b in bookings]
     return jsonify({'success': True, 'bookings': bookings_data})
 
+@app.route('/api/bookings/<int:booking_id>', methods=['GET'])
+@login_required
+def api_get_booking(booking_id):
+    booking = Booking.query.get_or_404(booking_id)
+    
+    if booking.user_id != current_user.id:
+        return jsonify({'success': False, 'error': 'Access denied'}), 403
+    
+    return jsonify({
+        'success': True,
+        'booking': {
+            'id': booking.id,
+            'animator_name': booking.animator_name,
+            'service_type': booking.service_type,
+            'booking_date': booking.booking_date.strftime('%Y-%m-%d'),
+            'booking_time': booking.booking_time.strftime('%H:%M'),
+            'status': booking.status
+        }
+    })
+
 @app.route('/api/bookings', methods=['POST'])
 @login_required
 def api_create_booking():
-    """POST /api/bookings - создание бронирования через API"""
     data = request.get_json()
     
     if not data:
@@ -354,4 +426,4 @@ def api_create_booking():
 # ========== ЗАПУСК ==========
 
 if __name__ == '__main__':
-    app.run(debug=True)# Version 1.0.0
+    app.run(debug=True)
