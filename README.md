@@ -11,8 +11,6 @@ cat > README.md << 'EOF'
 ### Страница регистрации
 ![Регистрация](screenshots/register.png)
 
-### Страница входа
-![Вход](screenshots/login.png)
 
 ### Личный кабинет
 ![Личный кабинет](screenshots/profile.png)
