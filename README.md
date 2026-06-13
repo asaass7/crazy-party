@@ -20,8 +20,6 @@ cat > README.md << 'EOF'
 ### Страница бронирования
 ![Бронирование](screenshots/booking.png)
 
-> **Примечание:** Скриншоты страниц услуг (Дни рождения, Новый год, Хэллоуин) и тёмной темы будут добавлены позже.
-
 ## 🚀 Функционал
 
 - ✅ Регистрация и авторизация пользователей
@@ -34,20 +32,16 @@ cat > README.md << 'EOF'
 - ✅ Просмотр и отмена бронирований
 - ✅ Обратная связь и отзывы
 - ✅ REST API с фильтрацией
-- ✅ Адаптивный дизайн (планшеты, телефоны)
+- ✅ Адаптивный дизайн
 - ✅ Тёмная/светлая тема
-- ✅ Анимации при наведении на карточки
-- ✅ Flash-сообщения об ошибках и успехе
+- ✅ Анимации при наведении
 
 ## 🛠 Технологии
 
-| Категория | Технологии |
-|-----------|------------|
-| **Backend** | Python, Flask, Flask-Login, Flask-Bcrypt, Flask-SQLAlchemy |
-| **Frontend** | HTML5, CSS3, JavaScript (Vanilla) |
-| **Database** | SQLite |
-| **Templating** | Jinja2 |
-| **API** | RESTful JSON |
+- **Backend:** Python, Flask, Flask-Login, Flask-Bcrypt, Flask-SQLAlchemy
+- **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
+- **Database:** SQLite
+- **Templating:** Jinja2
 
 ## 📦 Установка и запуск
 
@@ -58,14 +52,10 @@ cd crazy-party
 
 # 2. Создать виртуальное окружение
 python3 -m venv venv
-source venv/bin/activate  # Для Mac/Linux
-# venv\Scripts\activate  # Для Windows
+source venv/bin/activate
 
 # 3. Установить зависимости
 pip install -r requirements.txt
 
 # 4. Запустить приложение
 python app.py
-
-# 5. Открыть в браузере
-# http://127.0.0.1:5000
